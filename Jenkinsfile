@@ -10,7 +10,7 @@ pipeline {
         stage('Build docker image'){
             steps{
                 script{
-                    sh 'docker build -t namrata99/CICD-demo .'
+                    sh 'docker build -t namrata99/cicd-demo .'
                 }
             }
         }
@@ -21,7 +21,7 @@ pipeline {
                    sh 'docker login -u namrata99 -p ${dockerhubpwd}'
 
 }
-                   sh 'docker push namrata99/CICD-demo'
+                   sh 'docker push namrata99/cicd-demo'
                 }
             }
         }
