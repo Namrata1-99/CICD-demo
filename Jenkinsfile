@@ -25,6 +25,13 @@ pipeline {
                 }
             }
         }
+        stage('Scan the image'){
+             steps{
+                 script{
+                    sh 'trivy namrata99/cicd-demo '
+                 }
+             }
+        }
         stage('Deploy to k8s'){
             steps{
                 script{
