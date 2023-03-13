@@ -28,7 +28,7 @@ pipeline {
         stage('Scan the image'){
              steps{
                  script{
-                    sh 'trivy namrata99/cicd-demo '
+                    sh 'trivy image namrata99/cicd-demo '
                  }
              }
         }
