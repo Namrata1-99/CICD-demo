@@ -10,7 +10,7 @@ pipeline {
         stage('Build docker image'){
             steps{
                 script{
-                    sh 'docker build -t namrata99/cicd-demo .'
+                    sh 'docker build -t namrata99/cicd-demo:${BUILD_NUMBER}  .'
                 }
             }
         }
@@ -21,14 +21,14 @@ pipeline {
                    sh 'docker login -u namrata99 -p ${dockerhubpwd}'
 
 }
-                   sh 'docker push namrata99/cicd-demo'
+                   sh 'docker push namrata99/cicd-demo:${BUILD_NUMBER}'
                 }
             }
         }
         stage('Scan the image'){
              steps{
                  script{
-                    sh 'trivy image namrata99/cicd-demo > scanning.txt '
+                    sh 'trivy image namrata99/cicd-demo:${BUILD_NUMBER} > scanning.txt '
                  }
              }
         }
