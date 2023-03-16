@@ -40,7 +40,7 @@ pipeline {
                        script{
                            kubeconfig(credentialsId: 'kubeconfig') {
                                def image="namrata99/cicd-demo" + ":${BUILD_NUMBER}"
-                               sh "helm install sample-app ./my-charts/  --set image=${repository}"
+                               sh "helm install sample-app ./my-charts/  --set repository=${image}"
                            }
                        }
                    }
