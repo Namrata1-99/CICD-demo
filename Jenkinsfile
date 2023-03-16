@@ -32,13 +32,16 @@ pipeline {
                  }
              }
         }
-        stage('Deploy to k8s'){
-            steps{
-                script{
-                    kubernetesDeploy (configs: 'deploymentservice.yaml',kubeconfigId: 'k8sconfigpwd')
-                }
-            }
-        }
+       stage("deploy to kuberneted cluster using helm chart"){
+                   steps{
+                       script{
+                           kubeconfig(credentialsId: 'kubeconfig') {
+                               def image="namrata99/cicd-demo" + ":${BUILD_NUMBER}"
+                               sh "helm install sample-app ./my-charts/  --set image=${repository}"
+                           }
+                       }
+                   }
+               }
         stage('SonarQube analysis') {
             steps{
                 script{
