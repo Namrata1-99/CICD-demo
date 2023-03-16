@@ -31,7 +31,7 @@ pipeline {
         stage('Scan the image'){
              steps{
                  script{
-                    sh 'trivy image namrata99/cicd-demo:${BUILD_NUMBER} > scanning.txt '
+                    sh 'trivy image namrata99/cicd-demo:${BUILD_NUMBER}'
                  }
              }
         }
