@@ -43,9 +43,9 @@ pipeline {
                        script{
                            kubeconfig(credentialsId: 'kubeconfig') {
                                withFileParameter('newValues') {
-                                   sh 'cp -f $newValues ./sample-chart/values.yaml'
+                                   sh 'cp -f $newValues ./my-charts/values.yaml'
                                     def image="namrata99/cicd-demo" + ":${BUILD_NUMBER}"
-                                   sh "helm install sample-app ./sample-chart/ --set repository=${image}"
+                                   sh "helm install sample-app ./my-charts/ --set repository=${image}"
                                }
                            }
                        }
