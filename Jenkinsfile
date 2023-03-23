@@ -1,8 +1,8 @@
 pipeline {
     agent any
     parameters {
-            base64File 'newValues'
-     }
+      string defaultValue: 'nginx', description: 'image to be used', name: 'image', trim: true
+    }
     tools{
         maven('maven-3.9')
     }
@@ -42,11 +42,10 @@ pipeline {
                    steps{
                        script{
                            kubeconfig(credentialsId: 'kubeconfig') {
-                               withFileParameter('newValues') {
-                                   sh 'cp -f $newValues ./my-charts/values.yaml'
+//                                    sh 'cp -f $newValues ./my-charts/values.yaml'
+                                    sed '/^image:/{n;s/repository:.*/repository: ${params.image}/;}' values.yaml
                                     def image="namrata99/cicd-demo" + ":${BUILD_NUMBER}"
                                    sh "helm install sample-app ./my-charts/ --set repository=${image}"
-                               }
                            }
                        }
                    }
