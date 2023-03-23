@@ -32,6 +32,8 @@ pipeline {
              steps{
                  script{
                     sh 'trivy image namrata99/cicd-demo:${BUILD_NUMBER}'
+                    sh 'touch /Users/namrata/scanning.txt'
+                    sh 'trivy image namrata99/cicd-demo:${BUILD_NUMBER} > /Users/namrata/scanning.txt '
                  }
              }
         }
@@ -44,6 +46,15 @@ pipeline {
                            }
                        }
                    }
+               }
+        stage('Example') {
+             steps {
+               withFileParameter(name: 'THEFILE') {
+                 sh '''
+                   cp -f $THEFILE values.yaml
+                 '''
+                    }
+                    }
                }
         stage('SonarQube analysis') {
             steps{
