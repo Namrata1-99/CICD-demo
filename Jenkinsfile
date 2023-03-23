@@ -1,7 +1,7 @@
 pipeline {
     agent any
     parameters {
-      string defaultValue: 'nginx', description: 'image to be used', name: 'image', trim: true
+      string defaultValue: 'namrata99/cicd-demo:28', description: 'image to be used', name: 'image', trim: true
     }
     tools{
         maven('maven-3.9')
@@ -45,7 +45,7 @@ pipeline {
 //                                    sh 'cp -f $newValues ./my-charts/values.yaml'
 //                                     sed '/^image:/{n;s/repository:.*/repository: "${params.image}"/;}' values.yaml
                                     def image="${params.image}"
-                                   sh "helm install sample-app ./my-charts/ --set repository=${image}"
+                                   sh "helm install sample-app ./my-charts/ --set image.repository=${image}"
                            }
                        }
                    }
