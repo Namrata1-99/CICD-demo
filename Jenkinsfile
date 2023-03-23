@@ -44,7 +44,7 @@ pipeline {
                            kubeconfig(credentialsId: 'kubeconfig') {
 //                                    sh 'cp -f $newValues ./my-charts/values.yaml'
 //                                     sed '/^image:/{n;s/repository:.*/repository: "${params.image}"/;}' values.yaml
-                                    def image=${params.image}
+                                    def image="${params.image}"
                                    sh "helm install sample-app ./my-charts/ --set repository=${image}"
                            }
                        }
