@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    parameters {
+            base64File 'newValues'
+     }
     tools{
         maven('maven-3.9')
     }
@@ -39,20 +42,14 @@ pipeline {
                    steps{
                        script{
                            kubeconfig(credentialsId: 'kubeconfig') {
-                               def image="namrata99/cicd-demo" + ":${BUILD_NUMBER}"
-                               sh "helm install sample-app ./my-charts/  --set repository=${image}"
+                               withFileParameter('newValues') {
+                                   sh 'cp -f $newValues ./sample-chart/values.yaml'
+                                    def image="namrata99/cicd-demo" + ":${BUILD_NUMBER}"
+                                   sh "helm install sample-app ./sample-chart/ --set repository=${image}
+                               }
                            }
                        }
                    }
-               }
-        stage('Example') {
-             steps {
-               withFileParameter(name: 'THEFILE') {
-                 sh '''
-                   cp -f $THEFILE values.yaml
-                 '''
-                    }
-                    }
                }
         stage('SonarQube analysis') {
             steps{
